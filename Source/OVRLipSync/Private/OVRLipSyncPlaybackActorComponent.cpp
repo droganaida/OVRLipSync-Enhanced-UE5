@@ -115,3 +115,27 @@ void UOVRLipSyncPlaybackActorComponent::SetPlaybackSequence(UOVRLipSyncFrameSequ
 {
 	Sequence = InSequence;
 }
+
+bool UOVRLipSyncPlaybackActorComponent::GetVisemesTimeBased(float Time, TArray<float> &OutVisemes,
+															float &OutLaughterScore)
+{
+	if (!Sequence)
+	{
+		OutVisemes.Empty();
+		OutLaughterScore = 0.f;
+		return false;
+	}
+
+	int32 FrameIndex = static_cast<int32>(Time * 100);
+	if (FrameIndex < 0 || FrameIndex >= static_cast<int32>(Sequence->Num()))
+	{
+		OutVisemes.Empty();
+		OutLaughterScore = 0.f;
+		return false;
+	}
+
+	const auto &Frame = (*Sequence)[FrameIndex];
+	OutVisemes = Frame.VisemeScores;
+	OutLaughterScore = Frame.LaughterScore;
+	return true;
+}
