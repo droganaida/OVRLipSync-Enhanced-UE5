@@ -51,6 +51,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "LipSync", Meta = (Tooltip = "Sets playback sequence property"))
 	void SetPlaybackSequence(UOVRLipSyncFrameSequence *InSequence);
 
+	UFUNCTION(BlueprintCallable, Category = "LipSync")
+	bool GetVisemesTimeBased(float Time, TArray<float> &OutVisemes, float &OutLaughterScore);
+
+
 protected:
 	// Returns audio Component associated with the same
 	UAudioComponent *FindAutoplayAudioComponent() const;
